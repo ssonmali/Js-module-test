@@ -5,18 +5,16 @@
 :root {
   --light-text: #ffffff;
   --dark-text: hsl(229, 25%, 31%);
-  --score-text: hsl(229, 64%, 46%);
+  --score-text: hsl(229, 25%, 31%);
   --outline: hsl(217, 16%, 45%);
-  --bg-grad-1: hsl(214, 47%, 23%);
-  --bg-grad-2: hsl(237, 49%, 15%);
-  --scissors-1: hsl(39, 89%, 49%);
-  --scissors-2: hsl(40, 84%, 53%);
-  --paper-1: hsl(230, 89%, 62%);
-  --paper-2: hsl(230, 89%, 65%);
-  --rock-1: hsl(349, 71%, 52%);
-  --rock-2: hsl(349, 70%, 56%);
-  --shadow-light: #00000026;
-  --shadow-med: #0000004d;
+  --bg-grad-1: #89c15e;
+  --bg-grad-2: #89c15e;
+  --scissors-1: #bd00ff;
+  --scissors-2: #bd00ff;
+  --paper-1: hsl(40, 88%, 51%);
+  --paper-2: hsl(40, 89%, 50%);
+  --rock-1: hsl(230, 89%, 65%);
+  --rock-2: hsl(230, 89%, 65%);
 }
 
 * {
@@ -46,7 +44,7 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 150px;
-  border: 3px solid var(--outline);
+  border: 3px solid white;
   border-radius: 20px;
   padding: 1rem 1.4rem 1rem 2rem;
 }
@@ -85,8 +83,8 @@ body {
   display: grid;
   grid-template-columns: (repeat(2, 1fr));
   grid-template-areas:
-    "paper scissors"
-    "rock rock";
+    "rock scissors"
+    "paper paper";
   place-items: center;
   height: 30rem;
   padding-top: 4rem;
@@ -116,7 +114,6 @@ body {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  box-shadow: inset 0 0.5rem var(--shadow-light);
 }
 .choice::before,
 .choice::after {
@@ -136,7 +133,7 @@ body {
 }
 .choice-btn:focus .choice::after {
   opacity: 1;
-  box-shadow: 0 0 0 2rem #223351;
+  box-shadow: 0 0 0 2rem #225122;
   z-index: -2;
 }
 
@@ -187,7 +184,7 @@ body {
 .results__result {
   min-width: 10rem;
   min-height: 10rem;
-  background: #16213d;
+  background: #66b248;
   border-radius: 50%;
   transform: scale(1.4);
   z-index: -1;
@@ -214,7 +211,7 @@ body {
 }
 
 .winner .choice::after {
-  box-shadow: 0 0 0 40px #293251, 0 0 0 80px #232c4b, 0 0 0 130px #1e2949;
+  box-shadow: 0 0 0 20px #289a27, 0 0 0 50px #32a62f, 0 0 0 80px #66b248;
   animation: winner 1s ease forwards;
 }
 
@@ -262,7 +259,7 @@ body {
   ); /* Adjust based on the width and padding of the next button */
   background: none;
   outline: none;
-  border: 2px solid var(--outline);
+  border: 2px solid white;
   border-radius: 0.6rem;
   color: var(--light-text);
   padding: 0.6rem 1.5rem;
@@ -285,7 +282,7 @@ body {
   right: 2rem;
   background: none;
   outline: none;
-  border: 2px solid var(--outline);
+  border: 2px solid white;
   border-radius: 0.6rem;
   color: var(--light-text);
   padding: 0.6rem 1.5rem;
@@ -298,24 +295,41 @@ body {
 .next-btn:focus {
   border: 2px solid #fff;
 }
+/* Close Button */
+.close-btn {
+  border: 7px solid white !important;
+  color: white !important;
+  background-color: red !important;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  border-radius: 50%;
+  top: -2rem; /* Adjust the top position as needed */
+  right: -2rem; /* Adjust the right position as needed */
+  z-index: 999999; /* Ensure the close button is above other elements */
+}
+
+/* Rules Modal */
+.modal__container {
+  background: #004429;
+  border-radius: 0.5rem;
+  border: 8px solid white;
+  position: relative; /* Ensure relative positioning for absolute positioning of close button */
+  padding: 0 1rem 1rem 1rem;
+}
 
 /* Rules Modal */
 .modal {
   position: absolute;
   height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
+  max-width: 320px;
+  top: 8rem;
+  right: 3rem;
   display: grid;
   place-items: center;
-  background: var(--shadow-med);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   pointer-events: none;
-}
-.modal__container {
-  background: #fff;
-  border-radius: 0.5rem;
 }
 .modal__header {
   display: flex;
@@ -325,7 +339,8 @@ body {
 }
 .modal__heading {
   font-size: 1.5rem;
-  color: var(--dark-text);
+  color: white;
+  display: flex;
 }
 .close-btn {
   border: none;
@@ -333,13 +348,39 @@ body {
   background: none;
   cursor: pointer;
 }
-.rules-img {
-  padding: 2rem 4rem;
-}
 .show-modal {
   opacity: 1;
   pointer-events: initial;
 }
+.rules-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: white;
+}
+
+.rules-text > ul {
+  list-style-type: none; /* Remove default bullet points */
+}
+
+.rules-text > ul > li {
+  text-decoration-color: yellow;
+  position: relative;
+  padding-left: 25px; /* Adjust as needed */
+  margin-bottom: 10px;
+}
+
+.rules-text > ul > li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 10px; /* Adjust as needed for square size */
+  height: 10px; /* Adjust as needed for square size */
+  background-color: yellow;
+  border-radius: 2px;
+}
+
 
 /* Utilities */
 .preload * {
@@ -362,11 +403,14 @@ body {
 }
 
 .congrats-container img {
+  background-image: url("./images/Group\ 5.png");
+  background-size: contain;
   max-width: 100%;
   margin-bottom: 20px;
+  padding: 8rem 6rem 1rem 6rem;
 }
 
 .congrats-message {
-  font-size: 24px;
+  font-size: 3rem;
   margin-bottom: 20px;
 }

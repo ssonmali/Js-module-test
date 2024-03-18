@@ -41,8 +41,17 @@ const computerScoreNumber = document.querySelector(
 const computerScoreContainer = document.querySelector(".computer-score");
 computerScoreContainer.style.textAlign = "center"; // Align computer score text container in the center
 
-let score = 0;
-let computerScore = 0;
+// Load score from local storage on page load
+let score = localStorage.getItem("userScore")
+  ? parseInt(localStorage.getItem("userScore"))
+  : 0;
+let computerScore = localStorage.getItem("computerScore")
+  ? parseInt(localStorage.getItem("computerScore"))
+  : 0;
+
+// Update score display
+scoreNumber.innerText = score;
+computerScoreNumber.innerText = computerScore;
 
 // Event listener for the "next" button
 nextBtn.addEventListener("click", () => {
@@ -137,13 +146,18 @@ function isWinner(results) {
   return results[0].beats === results[1].name;
 }
 
+// Function to update score and save to local storage
 function keepScore(point, player) {
   if (player === "user") {
     score += point;
     scoreNumber.innerText = score;
+    // Save user score to local storage
+    localStorage.setItem("userScore", score);
   } else if (player === "computer") {
     computerScore += point;
     computerScoreNumber.innerText = computerScore;
+    // Save computer score to local storage
+    localStorage.setItem("computerScore", computerScore);
   }
 }
 
@@ -161,12 +175,42 @@ playAgainBtn.addEventListener("click", () => {
   resultWinner.classList.toggle("hidden");
   resultsDiv.classList.toggle("show-winner");
   playAgainBtn.classList.remove("visible");
+
+  // Reattach event listener for rules button
+  btnRules.addEventListener("click", toggleRulesModal);
 });
 
 // Show/Hide Rules
-btnRules.addEventListener("click", () => {
+function toggleRulesModal() {
   modalRules.classList.toggle("show-modal");
-});
-btnClose.addEventListener("click", () => {
-  modalRules.classList.toggle("show-modal");
+}
+
+btnRules.addEventListener("click", toggleRulesModal);
+btnClose.addEventListener("click", toggleRulesModal);
+
+// Event listener for the "Play Again" button inside the congrats container
+document
+  .querySelector(".congrats-container .play-again")
+  .addEventListener("click", () => {
+    // Hide the congrats container
+    congratsContainer.classList.add("hidden");
+
+    // Show the game container
+    document.querySelector(".container").classList.remove("hidden");
+    document.querySelector(".button-container").classList.remove("hidden");
+    gameDiv.classList.remove("hidden");
+
+    // Reset other sections
+    resultsDiv.classList.add("hidden");
+    resultWinner.classList.add("hidden");
+    resultsDiv.classList.remove("show-winner");
+    playAgainBtn.classList.remove("visible");
+
+    // Reattach event listener for rules button
+    btnRules.addEventListener("click", toggleRulesModal);
+  });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Show the rules modal on page load
+  modalRules.classList.add("show-modal");
 });

@@ -6,8 +6,6 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="app.js" defer></script>
-
   <title>Rock, Paper, Scissors</title>
 </head>
 <body class="preload">
@@ -61,21 +59,32 @@
   <div class="modal">
     <div class="modal__container">
       <header class="modal__header">
-        <h2 class="modal__heading">rules</h2>
-        <button class="close-btn">
+        <h2 class="modal__heading">GAME RULES</h2>
+        <button class="close-btn" >
           <img src="./images/icon-close.svg" alt="Close Button" />
         </button>
       </header>
-      <img src="./images/image-rules.svg" alt="Rules Image" class="rules-img" />
+      <div class="rules-text">
+        <ul>
+          <li>Rock beats scissors, scissors beat paper, and paper beats rock.</li>
+          <li>Agree ahead of time whether you’ll count off “rock, paper, scissors, shoot” or just “rock, paper, scissors.”</li>
+          <li>Use rock, paper, scissors to settle minor decisions or simply play to pass the time</li>
+          <li>If both players lay down the same hand, each player lays down another hand</li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <div class="congrats-container hidden">
-    <img src="path_to_your_image.jpg" alt="Congratulations Image">
-    <div class="congrats-message">
-      bagdu bigdu
+    <div class="congrats-content">
+      <img src="./images/Vector.png" alt="Foreground Image">
+      <div class="congrats-message">
+        <h1>HURRAY!!</h1>YOU WON THE GAME
+      </div>
+      <button class="play-again">Play Again</button>
     </div>
-    <button class="play-again">Play Again</button>
   </div>
+  
+  <script src="app.js" defer></script>
 </body>
 </html>
